@@ -80,7 +80,7 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
-                        <a href="#" class="btn" style="color: white; position: relative;"><img src="images/pencil.png">Post Thread</a>
+                        <a href="#" class="btn" style="color: white; position: relative;">Post Thread</a>
                         <!--Search Bar -->
                         <form action="#" class="searchBar">
                             @csrf
@@ -105,12 +105,14 @@
                                 </li>
                             @endif
                         @else
+                        <img src="{{asset('storage/'. Auth::user()->avatar )}}" width="30" height="30" alt="Profile Pic">
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre style="color: white">
+                                    {{ Auth::user()->username }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('profiles.edit',Auth::user()->username ) }}">Edit Profile</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
