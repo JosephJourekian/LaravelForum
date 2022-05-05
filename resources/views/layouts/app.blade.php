@@ -113,6 +113,9 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('profiles.edit',Auth::user()->username ) }}">Edit Profile</a>
+                                    @if (auth()->user()->type == 'admin')
+                                        <a class="dropdown-item" href="#">Admin Links</a>
+                                    @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

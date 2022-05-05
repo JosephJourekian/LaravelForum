@@ -19,8 +19,14 @@
                 <div class="card-header" style="color: white;">Edit Profile</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}" style="color: white;" enctype="multipart/form-data">
+                    @if(session()->has('message'))
+                        <div  style="color: white;">
+                            {{ session()->get('message') }}
+                        </div>
+                    @endif
+                    <form method="POST" action="{{ route('profiles.update',auth()->user()->username)}}" style="color: white;" enctype="multipart/form-data">
                         @csrf
+                        @method('PATCH')
 
                         <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
@@ -79,7 +85,7 @@
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
+                                    {{ __('Update') }}
                                 </button>
                             </div>
                         </div>
