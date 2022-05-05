@@ -64,6 +64,7 @@ class RegisterController extends Controller
             'username.without_spaces'=> 'Spaces not allowed.'
         ]*/
         );
+        
     }
 
     /**
@@ -75,8 +76,16 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         //use php artisan storage:link
-        //dd($data);
-        $data['avatar'] = request('avatar')->store('pics', 'public');
+        
+        if(request('avatar') == NULL)
+        {
+            $data['avatar'] = 'pics/battledroid.jpg';
+            
+        }
+        else{
+            $data['avatar'] = request('avatar')->store('pics', 'public');   
+        }
+        //$data['avatar'] = request('avatar')->store('pics', 'public');   
         return User::create([
             'username' => $data['username'],
             'email' => $data['email'],

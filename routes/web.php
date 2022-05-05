@@ -22,5 +22,6 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/profiles/edit/{user:username}', [App\Http\Controllers\ProfilesController::class, 'edit'])->name('profiles.edit');
+Route::patch('/profiles/update/{user:username}', 'App\Http\Controllers\ProfilesController@update')->name('profiles.update');
 
 
