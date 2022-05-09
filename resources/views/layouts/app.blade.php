@@ -4,6 +4,9 @@
     ::placeholder{
         color: white;
     }
+    body::-webkit-scrollbar {
+        display: none;
+    }
     .btn {
         background: #3498db;
         background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
@@ -80,7 +83,7 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
-                        <a href="#" class="btn" style="color: white; position: relative;">Post Thread</a>
+                        <a href="{{ route('threads.create') }}" class="btn" style="color: white; position: relative;">Post Thread</a>
                         <!--Search Bar -->
                         <form action="#" class="searchBar">
                             @csrf
@@ -113,8 +116,13 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('profiles.edit',Auth::user()->username ) }}">Edit Profile</a>
+                                    <a class="dropdown-item" href="#">My Posts</a>
+
                                     @if (auth()->user()->type == 'admin')
-                                        <a class="dropdown-item" href="#">Admin Links</a>
+                                        <a class="dropdown-item" href="{{ route('categories.index') }}">Add/Delete a Category</a>
+                                        <a class="dropdown-item" href="#">View Users</a>
+                                        <!--<a class="dropdown-item" href="#">Add A Category</a>-->
+                                    
                                     @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
