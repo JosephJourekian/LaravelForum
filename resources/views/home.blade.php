@@ -150,7 +150,14 @@
     <body>
         <div class="flex-center position-ref full-height">
 
-            <div class="content">
+            <div class="content" style="position: relative; bottom: 80px;">
+                <div class="title m-b-md" style="color: white;" >
+                    LaravelForum
+                </div>
+
+                <div class="links" style="position: relative; bottom: 30px;">
+                    <h1 style="color:white;">Welcome {{ auth()->user()->username }}!</h1>
+                </div>
                 <div class="block">
                     <h1 class="blockTitle">Categories</h1>
                 </div>
@@ -163,18 +170,6 @@
                     <h2 class="postsNumber">Posts</h2>
                     <h2 class="postsNumValue">12.3K</h2>
                 </div> 
-                <div class="title m-b-md" style="color: white;" >
-                    LaravelForum
-                </div>
-
-                <div class="links">
-                    @auth
-                        <a href="{{ url('home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}" style="color: white;">Login</a>
-                        <a href="{{ route('register') }}" style="color: white;">Register</a>
-                    @endauth
-                </div>
             </div>
         </div>
     </body>
