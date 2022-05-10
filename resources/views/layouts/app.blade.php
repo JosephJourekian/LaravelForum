@@ -39,6 +39,9 @@
         right: 15px;
         border-radius: 5px;
     }
+    .btn.btn-danger{
+        background-color: orange;
+    }
 
 </style>
 <head>
@@ -71,7 +74,7 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="nav-link" href="#" style="color:white;">New Threads</a>
+                <a class="nav-link" href="{{ route('threads.index') }}" style="color:white;">New Threads</a>
                 <a class="nav-link" href="#" style="color:white;">Trending</a>
 
 

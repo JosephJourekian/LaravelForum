@@ -35,3 +35,5 @@ Route::get('/threads', [App\Http\Controllers\ThreadsController::class, 'index'])
 Route::get('/threads/create', [App\Http\Controllers\ThreadsController::class, 'create'])->name('threads.create');
 Route::post('/threads/create', [App\Http\Controllers\ThreadsController::class, 'store'])->name('threads.store');
 Route::delete('/threads', [App\Http\Controllers\ThreadsController::class, 'delete'])->name('threads.delete');
+Route::get('/threads/show/{thread:name}', [App\Http\Controllers\ThreadsController::class, 'show'])->name('threads.show');
+

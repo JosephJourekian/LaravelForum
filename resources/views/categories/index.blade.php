@@ -15,6 +15,9 @@
         height: 35px;
         border-radius: 5px;
     }
+    .btn.btn-danger{
+        background: red;
+    }
     
 </style>
 
@@ -65,9 +68,9 @@
                         </div>
 
                         <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Add Category') }}
+                            <div class="col-md-6 offset-md-4" >
+                                <button type="submit" class="btn btn-danger">
+                                    {{ __('Delete Category') }}
                                 </button>
                             </div>
                         </div>
