@@ -9,21 +9,15 @@
     .card{
         background-color: rgba(45,55,72);
     }
-    .category{
-        width: 398px;
-        height: 35px;
-        border-radius: 5px;
-    }
     
 </style>
-
 
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             
             <div class="card">
-                <div class="card-header" style="color: white;">{{ __('Create a thread') }}</div>
+                <div class="card-header" style="color: white;">{{ $thread->name }}</div>
 
                 <div class="card-body">
                     @if(session()->has('message'))
@@ -42,25 +36,6 @@
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                                 @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="category" class="col-md-4 col-form-label text-md-end">{{ __('Category') }}</label>
-
-                            <div class="col-md-6">
-                                <select name="category[]"  class="category" required multiple style="height:{{ $size*22.5 }}px;">
-                                    @foreach($category as $categorie)
-                                        <option value="{{ $categorie->id }}">{{ $categorie->name }}</option>
-                                    @endforeach
-                                </select>
-                                
-
-                                @error('category')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
