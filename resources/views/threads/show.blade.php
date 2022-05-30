@@ -14,10 +14,22 @@
 
 <div class="container">
     <div class="row justify-content-center">
+        <div class="col-md-5" style="position: relative; left: 15px;width: 210px;">
+            <div class="card" style="height: 200px;">
+                <div class="card-body">
+                <img src="{{ asset('storage/'.$user->avatar) }}" style="border-radius: 50%; width: 50px; position: relative; left: 50px;">
+                <p style="color: white; text-align:center;line-height:2;">{{ $user->username }}</p>
+                <p style="color: white; text-align:center;line-height:0;">Joined on {{ $user->created_at->format('m/d/y') }}</p>
+                <p style="color: white; text-align:center;line-height:1;">Total Account Likes: 20</p>
+                <p style="color: white; text-align:center;line-height:0;">Number of Threads: 20</p>
+
+                </div>
+            </div>
+        </div>
         <div class="col-md-8">
             
             <div class="card">
-                <div class="card-header" style="color: white;">{{ $thread->name }}</div>
+                <div class="card-header" style="color: white; font-size:20px;">{{ $thread->name }}</div>
 
                 <div class="card-body">
                     @if(session()->has('message'))
@@ -30,83 +42,46 @@
                         @method('POST')
 
                         <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Thread Name') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                            <label for="name" class="col-md-4 col-form-label" style="font-size: 12px;">Created on {{ $thread->created_at->format('m/d/y') }}</label>
                         </div>
 
                         <div class="row mb-3">
-                            <label for="description" class="col-md-4 col-form-label text-md-end">{{ __('Description') }}</label>
-
-                            <div class="col-md-6">
-                                <textarea id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" required autocomplete="description" style="height: 100px;"></textarea>
-
-                                @error('description')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                            <p class="col-md-4 col-form-label " style="width: auto; height: auto; text-align:left; white-space:pre-wrap;">{{ $thread->description }}</p>
                         </div>
 
-                        <div class="row mb-3">
-                            <label for="ThreadPic" class="col-md-4 col-form-label text-md-end">Thread Picture</label>
-
-                            <div class="col-md-6">
-                                <input id="ThreadPic" type="file" class="form-control @error('ThreadPic') is-invalid @enderror" name="ThreadPic" value="{{ old('ThreadPic') }}" >
-
-
-                                @error('ThreadPic')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                        <div style="display: flex;">
+                            <div class="row">
+                                <img src="{{asset("storage/". $thread->threadPic) }}" style="margin-left:-10px;">   
                             </div>
+
+                            @if ($pics != null)
+                                <div class="row">
+                                    <img src="{{asset("storage/". $pics->image) }}">        
+                                </div>   
+                            @endif
+                            
                         </div>
 
-                        <div class="row mb-3">
-                            <label for="image[]" class="col-md-4 col-form-label text-md-end">Images (Ctrl + Click for multiple)</label>
+                        @if ($links != null)
+                            <div class="row mb-3">
+                                <a href="{{ $links->link }}" style="color:white; white-space: nowrap;"class="col-md-4 col-form-label text-md-end">{{ $links->link }}</a>
 
-                            <div class="col-md-6">
-                                <input id="image[]" type="file" class="form-control @error('image[]') is-invalid @enderror" name="image[]" value="" multiple>
-
-
-                                @error('image[]')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
                             </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="links" class="col-md-4 col-form-label text-md-end">{{ __('Links (for multiple put a comma and space after each link)') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="links" type="text" class="form-control @error('links') is-invalid @enderror" name="links" value="{{ old('links') }}">
-
-                                @error('links')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-
+                        @endif
+                            
+                        
                         <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Post Thread') }}
-                                </button>
+                            <div class="col-md-6" style="display: inline-flex;">
+                                <form method="POST" action="#">
+                                @csrf
+                                    <p>0</p>
+                                    <img src="{{asset("storage/pics/thumbs up2.png") }}" width="30" height="30" style="margin-left:10px; margin-top:-10px;">
+                                </form>
+                                <form method="POST" action="#" style="display: inline-flex;">
+                                @csrf
+                                    <p style="margin-left:10px;">0</p>
+                                    <img src="{{asset("storage/pics/thumbs down.png") }}" style="margin-left:10px; margin-top:-10px;" width="30" height="30">
+                                </form>
                             </div>
                         </div>
                     </form>

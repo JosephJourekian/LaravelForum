@@ -7,6 +7,7 @@ use App\Models\Threads;
 use App\Models\ThreadImages;
 use App\Models\ThreadLinks;
 use App\Models\Category;
+use App\Models\User;
 use Carbon\Carbon;
 use DB;
 
@@ -42,7 +43,7 @@ class ThreadsController extends Controller
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
-    
+        
         
         DB::table('threads')->insert($attributes);
 
@@ -100,7 +101,19 @@ class ThreadsController extends Controller
 
     }
 
-    public function show(){
+    public function show($name){
+
+        $thread = Threads::where('name', $name)->first();
+        $user = User::find($thread->user_id);
+        //$pic = ThreadImages::where('thread_id', $thread->id)->first();
+        $links = ThreadLinks::where('thread_id', $thread->id)->first();
+
+        return view('threads.show', [
+            'thread' => $thread,
+            'user' => $user,
+            'pics' => ThreadImages::where('thread_id', $thread->id)->first(),
+            'links' => $links
+        ]);
 
     }
 }

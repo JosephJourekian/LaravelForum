@@ -112,38 +112,56 @@
             }
             .threadName{
                 color: white;
+                font-size: 15px;
+                font-weight: bold;
+                text-align: left;
+                text-decoration: none;
                 position: relative;
-                font-size: 13px;
-                right: 385px;
-                bottom:25px;
+                left: -250px;
+                top: -30px;
             }
             .threadNumber{
                 color: white;
                 font-size: 15px;
                 position: relative;
-                bottom: 85px;
+                bottom: 100px;
                 left: 230px;
             }
             .threadNumValue{
                 color: white;
                 font-size: 15px;
                 position: relative;
-                bottom: 75px;
+                bottom: 90px;
                 left: 230px;
             }
             .postsNumber{
                 color: white;
                 font-size: 15px;
                 position: relative;
-                bottom: 137px;
+                bottom: 150px;
                 left: 370px;
             }
             .postsNumValue{
                 color: white;
                 font-size: 15px;
                 position: relative;
-                bottom: 128px;
+                bottom: 140px;
                 left: 370px;
+            }
+            .threadPic{
+                height: 70px;
+                width: 70px;
+                border-radius: 50%;
+                position: relative;
+                left: -555px;
+                bottom: 15px;
+            }
+            .threadDate{
+                color: white;
+                position: relative;
+                top: -50px;
+                right: 337px;
+                font-size: 13px;
             }
         </style>
     </head>
@@ -159,25 +177,18 @@
                     <h1 style="color:white;">Welcome {{ auth()->user()->username }}!</h1>
                 </div>
                 <div class="block">
-                    <h1 class="blockTitle">Filter</h1>
+                    <h1 class="blockTitle">Most Recent Threads</h1>
                 </div>
                 @foreach ($threads as $thread)
-                <div class="blockCategories">
-                    <h1>{{ $thread->name }}</h1>
-                    <div class="">
-                        <img src="{{asset('storage/'.$thread->threadPic) }}" alt="Thread Pic">
-                    </div>
-                    @foreach ($categories as $categorie)
-                        <h2 class="categoryName">Category: {{ $categorie->name }}</h2>   
-                        
-                    @endforeach
-                    <!--Load the category threads names -->
-                    <img src="images/message.webp" height="35px" width="35px" style="position: relative; right: 439px;"><h3 class="threadName">Thread name</h3>
-                    <h2 class="threadNumber">Threads</h2>
-                    <h2 class="threadNumValue">2.2K</h2>
-                    <h2 class="postsNumber">Posts</h2>
-                    <h2 class="postsNumValue">12.3K</h2>
-                </div> 
+                    <div class="blockCategories">
+                        <a href="{{ route('threads.show',$thread->name) }}" class="threadName">{{ \Illuminate\Support\Str::limit($thread->name, 30, $end="..") }}</a>
+                        <img class="threadPic" src="{{asset('storage/'.$thread->threadPic) }}" alt="Thread Pic">
+                        <h5 class="threadDate">Created on: {{ $thread->created_at->format('m/d/y') }}</h5>
+                        <h2 class="threadNumber">Category</h2>
+                        <h2 class="threadNumValue">{{ $thread->getCategory($thread->id) }}</h2>
+                        <h2 class="postsNumber">Comments</h2>
+                        <h2 class="postsNumValue">12.3K</h2>
+                    </div> 
                 @endforeach
             </div>
         </div>
