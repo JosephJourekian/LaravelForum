@@ -41,5 +41,16 @@ class Threads extends Model
         return $this->belongsToMany(Category::class);
     }
 
+    public function getCategory($id){
+
+     
+        $thread = Threads::find($id);
+        
+        foreach ($thread->category as $categories){
+            
+            return($categories->name);
+        }
+    }
+
 
 }

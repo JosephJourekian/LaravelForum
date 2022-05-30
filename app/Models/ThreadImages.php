@@ -11,6 +11,7 @@ class ThreadImages extends Model
     use HasFactory;
 
     protected $guarded = [];
+    
 
     public function threads(){ //Always have the name::class be the same name as the function name{
 
