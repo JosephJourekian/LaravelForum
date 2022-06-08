@@ -8,6 +8,7 @@ use App\Models\ThreadImages;
 use App\Models\ThreadLinks;
 use App\Models\Category;
 use App\Models\User;
+use App\Models\Comments;
 use Carbon\Carbon;
 use DB;
 
@@ -47,6 +48,8 @@ class ThreadsController extends Controller
         
         DB::table('threads')->insert($attributes);
 
+        $user = User::find($thread->user_id);
+
         //inserting the extra images for a thread in another table
         if(request('image') != null){
             foreach (request()->file('image') as $image){
@@ -83,18 +86,46 @@ class ThreadsController extends Controller
 
         return view('threads.show', [
             'thread' => $thread,
+            'user' => $user,
             'links' => ThreadLinks::all(),
             'images' => ThreadImages::all()
         ]);
         
     }
 
-    public function edit(){
+    public function edit(Threads $thread){
 
+        $size = Category::all()->count();
+        $links = ThreadLinks::where('thread_id', $thread->id)->first();
+        $pics = ThreadImages::where('thread_id', $thread->id)->first();
+
+        return view('threads.edit', [ 
+            'thread' => $thread,
+            'category' => Category::all(),
+            'size' => $size,
+            'links' => $links,
+            'pics' => $pics 
+        ]);
     }
 
-    public function update(){
+    public function update(Threads $thread){
 
+        
+        $attributes = ([
+            'name' => request('name'),
+            'author' => auth()->user()->username,
+            'user_id' => auth()->user()->id,
+            'description' => request('description'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+        ]);
+        
+        $thread->update($attributes);
+
+        foreach (request('category') as $item){
+            $thread->category()->syncWithoutDetaching([$item]); //Attaches only those not in the pivot table
+        }
+    
+        return app('App\Http\Controllers\ThreadsController')->show($thread->name);
     }
 
     public function delete(){
@@ -105,14 +136,15 @@ class ThreadsController extends Controller
 
         $thread = Threads::where('name', $name)->first();
         $user = User::find($thread->user_id);
-        //$pic = ThreadImages::where('thread_id', $thread->id)->first();
         $links = ThreadLinks::where('thread_id', $thread->id)->first();
+        $comments = Comments::where('thread_id', $thread->id)->get();
 
         return view('threads.show', [
             'thread' => $thread,
             'user' => $user,
             'pics' => ThreadImages::where('thread_id', $thread->id)->first(),
-            'links' => $links
+            'links' => $links,
+            'comments' => $comments
         ]);
 
     }

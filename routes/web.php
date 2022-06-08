@@ -36,4 +36,12 @@ Route::get('/threads/create', [App\Http\Controllers\ThreadsController::class, 'c
 Route::post('/threads/create', [App\Http\Controllers\ThreadsController::class, 'store'])->name('threads.store');
 Route::delete('/threads', [App\Http\Controllers\ThreadsController::class, 'delete'])->name('threads.delete');
 Route::get('/threads/show/{thread:name}', [App\Http\Controllers\ThreadsController::class, 'show'])->name('threads.show');
+Route::get('/threads/edit/{thread:name}', [App\Http\Controllers\ThreadsController::class, 'edit'])->name('threads.edit');
+Route::patch('/threads/update/{thread:name}', 'App\Http\Controllers\ThreadsController@update')->name('threads.update');
 
+
+//Comments
+Route::post('/comments/store', [App\Http\Controllers\CommentsController::class, 'store'])->name('comments.store');
+Route::get('/comments/edit/{comments:id}', [App\Http\Controllers\CommentsController::class, 'edit'])->name('comments.edit');
+Route::patch('/comments/update/{comments:id}', 'App\Http\Controllers\CommentsController@update')->name('comments.update');
+Route::delete('/comments', [App\Http\Controllers\CommentsController::class, 'delete'])->name('comments.delete');
