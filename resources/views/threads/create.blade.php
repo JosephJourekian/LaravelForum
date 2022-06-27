@@ -86,7 +86,7 @@
                             <label for="ThreadPic" class="col-md-4 col-form-label text-md-end">Thread Picture</label>
 
                             <div class="col-md-6">
-                                <input id="ThreadPic" type="file" class="form-control @error('ThreadPic') is-invalid @enderror" name="ThreadPic" value="{{ old('ThreadPic') }}" >
+                                <input id="ThreadPic" type="file" class="form-control @error('ThreadPic') is-invalid @enderror" name="ThreadPic" value="{{ old('ThreadPic') }}" required>
 
 
                                 @error('ThreadPic')

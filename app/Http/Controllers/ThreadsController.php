@@ -45,8 +45,9 @@ class ThreadsController extends Controller
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
         
-        
         DB::table('threads')->insert($attributes);
+
+        $thread = Threads::where('name', request('name'))->first();
 
         $user = User::find($thread->user_id);
 
@@ -84,11 +85,17 @@ class ThreadsController extends Controller
             DB::table('thread_links')->insert($val);*/
         }
 
+        $pics = ThreadImages::where('thread_id', $thread->id)->get();
+        $links = ThreadLinks::where('thread_id', $thread->id)->get();
+        $comments = Comments::where('thread_id', $thread->id)->get();
+
+
         return view('threads.show', [
             'thread' => $thread,
             'user' => $user,
-            'links' => ThreadLinks::all(),
-            'images' => ThreadImages::all()
+            'links' => $links,
+            'pics' => $pics,
+            'comments' => $comments
         ]);
         
     }
@@ -96,21 +103,23 @@ class ThreadsController extends Controller
     public function edit(Threads $thread){
 
         $size = Category::all()->count();
-        $links = ThreadLinks::where('thread_id', $thread->id)->first();
-        $pics = ThreadImages::where('thread_id', $thread->id)->first();
+        $links = ThreadLinks::where('thread_id', $thread->id)->get();
+        $pics = ThreadImages::where('thread_id', $thread->id)->get();
+        $comments = Comments::where('thread_id', $thread->id)->get();
+
 
         return view('threads.edit', [ 
             'thread' => $thread,
             'category' => Category::all(),
             'size' => $size,
             'links' => $links,
-            'pics' => $pics 
+            'pics' => $pics,
+            'comments' => $comments
         ]);
     }
 
     public function update(Threads $thread){
 
-        
         $attributes = ([
             'name' => request('name'),
             'author' => auth()->user()->username,
@@ -129,20 +138,27 @@ class ThreadsController extends Controller
     }
 
     public function delete(){
-
+        $id = request('id');
+        Threads::where('id', $id)->delete();
+        
+        return view('threads.index', [
+            'threads' => Threads::all()->sortByDesc("created_at"),
+            'categories' => Category::all()
+        ]);
     }
 
     public function show($name){
 
         $thread = Threads::where('name', $name)->first();
         $user = User::find($thread->user_id);
-        $links = ThreadLinks::where('thread_id', $thread->id)->first();
+        $links = ThreadLinks::where('thread_id', $thread->id)->get();
         $comments = Comments::where('thread_id', $thread->id)->get();
+        $pics = ThreadImages::where('thread_id', $thread->id)->get();
 
         return view('threads.show', [
             'thread' => $thread,
             'user' => $user,
-            'pics' => ThreadImages::where('thread_id', $thread->id)->first(),
+            'pics' => $pics,
             'links' => $links,
             'comments' => $comments
         ]);

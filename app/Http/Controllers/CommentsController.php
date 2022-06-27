@@ -28,23 +28,54 @@ class CommentsController extends Controller
    
         DB::table('comments')->insert($attributes);
 
+
         $comments = Comments::all()->where('thread_id', request('thread_id'));
 
-        $thread = Threads::find(request('thread_id'))->first();
+        $thread = Threads::find(request('thread_id'));
+
 
         return app('App\Http\Controllers\ThreadsController')->show($thread->name);
     
     }
 
-    public function edit(){
+    public function edit($comment){
 
+        $comment = Comments::find($comment);        
+
+        return view('comments', [
+            'comment' => $comment
+        ]);
     }
 
-    public function update(){
+    public function update($comment){
+
+        $comment = Comments::find($comment);
+
+        $attributes = ([
+            'comment' => request('comment'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+        ]);
+
+        if(request('image')){
+            $attributes['image'] = request('image')->store('pics', 'public');
+        }
+        if(request('link'))
+        {
+            $attributes['link'] = request('link');
+        }
+        
+        $comment->update($attributes);
+
+        $thread = Threads::find($comment->thread_id);
+
+        return app('App\Http\Controllers\ThreadsController')->show($thread->name);
 
     }
 
     public function delete(){
-
+        $id = request('id');
+        Comments::where('id', $id)->delete();
+        
+        return back()->withInput();    
     }
 }
