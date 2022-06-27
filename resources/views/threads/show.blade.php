@@ -3,11 +3,18 @@
 @section('content')
 
 <style>
+    
+    .btn.btn-danger {
+        background-color: red !important;
+        background-image: none;
+    }
     body{
         background-color: rgba(26,32,44);
     }
     .card{
         background-color: rgba(45,55,72);
+        border:none;
+
     }
     
 </style>
@@ -51,25 +58,35 @@
                             <p class="col-md-4 col-form-label " style="width: auto; height: auto; text-align:left; white-space:pre-wrap;">{{ $thread->description }}</p>
                         </div>
 
-                        <div style="display: flex;">
-                            <div class="row">
-                                <img src="{{asset("storage/". $thread->threadPic) }}" style="margin-left:-10px;">   
+                        <div>
+                            <div class="row mb-3">
+                                <img src="{{asset("storage/". $thread->threadPic) }}" style="width:300px; height:200px;">   
                             </div>
 
                             @if ($pics != null)
-                                <div class="row">
-                                    <img src="{{asset("storage/". $pics->image) }}">        
-                                </div>   
+                                @foreach ($pics as $pic)
+                                    <div class="row">
+                                      <div class="col-sm">
+                                        <div class="card mb-3">
+                                            <img src="{{asset("storage/". $pic->image) }}" style="width:300px; height:200px;">        
+                                        </div>
+                                      </div>
+                                    </div>   
+                                @endforeach
                             @endif
                             
                         </div>
 
                         @if ($links != null)
-                            <div class="row mb-3">
-                                <a href="{{ $links->link }}" style="color:white; white-space: nowrap;"class="col-md-4 col-form-label text-md-end">{{ $links->link }}</a>
+                            @foreach ($links as $link)
+                            <div style="display: inline; margin-right:15px;">
+                                <a href="{{ $link->link }}" style="color:white; white-space: nowrap;"class="col-md-4 col-form-label text-md-end">{{ $link->link }}</a>
                             </div>
+                            <!--<div class="row mb-3">
+                                <a href="{{ $link->link }}" style="color:white; white-space: nowrap;"class="col-md-4 col-form-label text-md-end">{{ $link->link }}</a>
+                            </div>--> 
+                            @endforeach
                         @endif
-                            
                         
                         <div class="row mb-0">
                             <div class="col-md-6" style="display: inline-flex;">
@@ -85,8 +102,15 @@
                                 </form>
 
                                 @if ($thread->user_id == auth()->user()->id)
-                                    <div style="position: relative; left:620px;">
-                                        <button type="submit" class="btn btn-primary">
+                                    <div style="position: relative; left:480px; display:flex;">
+                                        <form method="POST" action="{{ route('threads.delete') }}"> 
+                                            @csrf
+                                            @method('DELETE')
+                                            <input type="hidden" name="id" value="{{ $thread->id }}"> 
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <button type="submit" class="btn btn-danger"> Delete Thread</button>
+                                        </form>
+                                        <button type="submit" class="btn btn-primary" style="margin-left: 20px;">
                                             <a href="{{ route('threads.edit',$thread->name) }}" style="text-decoration: none; color: white;" >Edit Thread</a>
                                         </button>
                                     </div>
@@ -149,7 +173,6 @@
                         </div>
                         
                             
-                        
                         <div class="row mb-0">
                             <div class="col-md-6" style="display: inline-flex;">
                                 <form method="POST" action="#">
@@ -164,9 +187,16 @@
                                 </form>
 
                                 @if ($comment->user_id == auth()->user()->id)
-                                    <div style="position: relative; left:605px;">
-                                        <button type="submit" class="btn btn-primary">
-                                            <a href="{{ route('threads.edit',$thread->name) }}" style="text-decoration: none; color: white;" >Edit Comment</a>
+                                    <div style="position: relative; left:450px; display:flex;">
+                                        <form method="POST" action="{{ route('comments.delete') }}"> 
+                                            @csrf
+                                            @method('DELETE')
+                                            <input type="hidden" name="id" value="{{ $comment->id }}"> 
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <button type="submit" class="btn btn-danger"> Delete Comment</button>
+                                        </form>
+                                        <button type="submit" class="btn btn-primary" style="margin-left: 20px;">
+                                            <a href="{{ route('comments',$comment->id) }}" style="text-decoration: none; color: white;" >Edit Comment</a>
                                         </button>
                                     </div>
                                 @endif

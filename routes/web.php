@@ -19,6 +19,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::middleware('auth')->group(function (){ //Makes sure the user is logged in to view
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //Profile Editing
@@ -39,9 +41,10 @@ Route::get('/threads/show/{thread:name}', [App\Http\Controllers\ThreadsControlle
 Route::get('/threads/edit/{thread:name}', [App\Http\Controllers\ThreadsController::class, 'edit'])->name('threads.edit');
 Route::patch('/threads/update/{thread:name}', 'App\Http\Controllers\ThreadsController@update')->name('threads.update');
 
-
 //Comments
 Route::post('/comments/store', [App\Http\Controllers\CommentsController::class, 'store'])->name('comments.store');
-Route::get('/comments/edit/{comments:id}', [App\Http\Controllers\CommentsController::class, 'edit'])->name('comments.edit');
+Route::get('/comments/edit/{comments:id}', [App\Http\Controllers\CommentsController::class, 'edit'])->name('comments');
 Route::patch('/comments/update/{comments:id}', 'App\Http\Controllers\CommentsController@update')->name('comments.update');
 Route::delete('/comments', [App\Http\Controllers\CommentsController::class, 'delete'])->name('comments.delete');
+
+});
