@@ -43,4 +43,10 @@ class User extends Authenticatable
         //This is used to search for the name instead of the id\
         return 'name';
     }
+
+    public function getThreadCount($id){
+        $count = 0;
+        $count = Threads::where('user_id', $id)->count();
+        return ($count);
+    }
 }

@@ -16,6 +16,8 @@ class ThreadsController extends Controller
 {
     public function index(){
 
+      
+
         return view('threads.index', [
             'threads' => Threads::all()->sortByDesc("created_at"),
             'categories' => Category::all()

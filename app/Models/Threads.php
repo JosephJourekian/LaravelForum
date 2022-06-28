@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\ThreadLinks;
 use App\Models\ThreadImages;
 use App\Models\Category;
+use App\Models\Comments;
 
 
 class Threads extends Model
@@ -52,5 +53,16 @@ class Threads extends Model
         }
     }
 
+    public function comments()
+    {
+        return $this->belongsToMany(Comments::class);
+    }
+
+    public function getCommentsCount($id){
+
+        $count = 0;
+        $count = Comments::where('thread_id', $id)->count();
+        return($count);
+    }
 
 }
