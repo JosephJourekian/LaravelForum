@@ -71,17 +71,16 @@
                 background-color: rgb(28, 90, 130);
                 position: relative;
                 right: 145px;
-                border-radius: 3px;"
+                border-radius: 3px;
             }
             .blockCategories{
                 width: 1000px;
                 border: 2px;
-                padding: 25px;
                 background-color: rgba(45,55,72);
                 position: relative;
                 right: 145px;
                 height: 100px;
-                border-radius: 3px;"
+                border-radius: 3px;
             }
             .blockTitle{
                 color: white;
@@ -117,8 +116,10 @@
                 text-align: left;
                 text-decoration: none;
                 position: relative;
-                left: -250px;
-                top: -30px;
+                left: 100px;
+                top: 35px;
+                z-index: 9999999999;
+                
             }
             .threadNumber{
                 color: white;
@@ -153,22 +154,24 @@
                 width: 70px;
                 border-radius: 50%;
                 position: relative;
-                left: -555px;
+                left: -450px;
                 bottom: 15px;
             }
             .threadDate{
                 color: white;
                 position: relative;
                 top: -50px;
-                right: 337px;
+                right: -100px;
                 font-size: 13px;
+                text-align: left;
+                width: fit-content;
             }
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
+        <div class="flex-center position-ref full-height" style="height: 100%;">
 
-            <div class="content" style="position: relative; bottom: 80px;">
+            <div class="content">
                 <div class="title m-b-md" style="color: white;" >
                     LaravelForum
                 </div>
@@ -181,13 +184,15 @@
                 </div>
                 @foreach ($threads as $thread)
                     <div class="blockCategories">
-                        <a href="{{ route('threads.show',$thread->name) }}" class="threadName">{{ \Illuminate\Support\Str::limit($thread->name, 30, $end="..") }}</a>
+                        <div style="width: fit-content">
+                            <a href="{{ route('threads.show',$thread->name) }}" class="threadName"><p style="width: fit-content;">{{ \Illuminate\Support\Str::limit($thread->name, 30, $end="..") }}</p></a>
+                        </div>
                         <img class="threadPic" src="{{asset('storage/'.$thread->threadPic) }}" alt="Thread Pic">
                         <h5 class="threadDate">Created on: {{ $thread->created_at->format('m/d/y') }}</h5>
                         <h2 class="threadNumber">Category</h2>
                         <h2 class="threadNumValue">{{ $thread->getCategory($thread->id) }}</h2>
                         <h2 class="postsNumber">Comments</h2>
-                        <h2 class="postsNumValue">12.3K</h2>
+                        <h2 class="postsNumValue">{{ $thread->getCommentsCount($thread->id) }}</h2>
                     </div> 
                 @endforeach
             </div>

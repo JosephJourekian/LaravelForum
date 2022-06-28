@@ -32,7 +32,7 @@
                 <p style="color: white; text-align:center;line-height:2;">{{ $user->username }}</p>
                 <p style="color: white; text-align:center;line-height:0;">Joined on {{ $user->created_at->format('m/d/y') }}</p>
                 <p style="color: white; text-align:center;line-height:1;">Total Account Likes: 20</p>
-                <p style="color: white; text-align:center;line-height:0;">Number of Threads: 20</p>
+                <p style="color: white; text-align:center;line-height:0;">Number of Threads: {{ $user->getThreadCount($user->id) }}</p>
 
                 </div>
             </div>
@@ -79,17 +79,14 @@
 
                         @if ($links != null)
                             @foreach ($links as $link)
-                            <div style="display: inline; margin-right:15px;">
+                            <div style="display: inline; margin-right:20px;">
                                 <a href="{{ $link->link }}" style="color:white; white-space: nowrap;"class="col-md-4 col-form-label text-md-end">{{ $link->link }}</a>
                             </div>
-                            <!--<div class="row mb-3">
-                                <a href="{{ $link->link }}" style="color:white; white-space: nowrap;"class="col-md-4 col-form-label text-md-end">{{ $link->link }}</a>
-                            </div>--> 
                             @endforeach
                         @endif
                         
                         <div class="row mb-0">
-                            <div class="col-md-6" style="display: inline-flex;">
+                            <div class="col-md-6" style="display: inline-flex; margin-top:25px;">
                                 <form method="POST" action="#">
                                 @csrf
                                     <p>0</p>
@@ -130,12 +127,13 @@
     <div class="row justify-content-center mt-5"><!--Thread is here -->
         <div class="col-md-5" style="position: relative; left: 15px;width: 210px;">
             <div class="card" style="height: 200px;">
+                <p hidden> {{ $userInfo = $comment->getUserInfo($comment->user_id) }}<p>
                 <div class="card-body">
-                <img src="{{ asset('storage/'.$user->avatar) }}" style="border-radius: 50%; width: 50px; position: relative; left: 50px;">
-                <p style="color: white; text-align:center;line-height:2;">{{ $user->username }}</p>
-                <p style="color: white; text-align:center;line-height:0;">Joined on {{ $user->created_at->format('m/d/y') }}</p>
+                <img src="{{ asset('storage/'.$userInfo->avatar) }}" style="border-radius: 50%; width: 50px; position: relative; left: 50px;">
+                <p style="color: white; text-align:center;line-height:2;">{{ $userInfo->username }}</p>
+                <p style="color: white; text-align:center;line-height:0;">Joined on {{ $userInfo->created_at->format('m/d/y') }}</p>
                 <p style="color: white; text-align:center;line-height:1;">Total Account Likes: 20</p>
-                <p style="color: white; text-align:center;line-height:0;">Number of Threads: 20</p>
+                <p style="color: white; text-align:center;line-height:0;">Number of Threads: {{ $comment->getThreadCount($comment->user_id) }}</p>
 
                 </div>
             </div>
