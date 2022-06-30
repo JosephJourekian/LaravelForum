@@ -68,14 +68,22 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light shadow-sm" style="background-color:rgba(45,55,72);" >
             <div class="container">
+                @if(auth()->user())
+                <a class="navbar-brand" href="{{ route('threads.index') }}" style="color: white;">
+                    LaravelForum
+                </a>
+                @else
                 <a class="navbar-brand" href="{{ url('/') }}" style="color: white;">
                     LaravelForum
                 </a>
+                @endif
+                
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <a class="nav-link" href="{{ route('threads.index') }}" style="color:white;">New Threads</a>
-                <a class="nav-link" href="#" style="color:white;">Trending</a>
+                <a class="nav-link" style="color:white;" href="{{ route('threads.index', ['trending' => true]) }}">Trending</a>
+                <!--<a class="nav-link" href="#" style="color:white;">Trending</a>-->
 
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">

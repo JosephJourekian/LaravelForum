@@ -10,16 +10,41 @@ use App\Models\Category;
 use App\Models\User;
 use App\Models\Comments;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use DB;
 
 class ThreadsController extends Controller
 {
     public function index(){
 
-      
+        $title = null;
+        $trend = '0';
+        if(request('trending') == 1){//If the user clicks on trending
+            $trend = 'Most Trending Threads';
+            return view('threads.index', [
+                'threads' => Threads::all()->sortByDesc("commentCount"),
+                'trend' => $trend,
+                'title' => $title,
+                'categories' => Category::all()
+            ]);
+        }
+
+        if (request('category')){
+            $threads = Category::where('name', request('category'))->firstOrFail()->threads;
+            $title = request('category');
+
+            return view('threads.index', [
+                'threads' => $threads,
+                'trend' => $trend,
+                'title' => $title,
+                'categories' => Category::all()
+            ]);
+        }
 
         return view('threads.index', [
             'threads' => Threads::all()->sortByDesc("created_at"),
+            'trend' => $trend,
+            'title' => $title,
             'categories' => Category::all()
         ]);
     }
@@ -135,7 +160,7 @@ class ThreadsController extends Controller
         foreach (request('category') as $item){
             $thread->category()->syncWithoutDetaching([$item]); //Attaches only those not in the pivot table
         }
-    
+        //Calls a function from another controller.
         return app('App\Http\Controllers\ThreadsController')->show($thread->name);
     }
 

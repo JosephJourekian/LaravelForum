@@ -21,6 +21,7 @@ class CreateThreadsTable extends Migration
             $table->string('author');
             $table->string('image');
             $table->string('description');
+            $table->string('commentCount')->default('0');
 
         });
     }

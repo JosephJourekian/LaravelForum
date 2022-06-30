@@ -32,7 +32,7 @@ class CommentsController extends Controller
         $comments = Comments::all()->where('thread_id', request('thread_id'));
 
         $thread = Threads::find(request('thread_id'));
-
+        $threadComment = Threads::where('id', $thread->id)->increment('commentCount',1);
 
         return app('App\Http\Controllers\ThreadsController')->show($thread->name);
     
@@ -74,7 +74,9 @@ class CommentsController extends Controller
 
     public function delete(){
         $id = request('id');
+        $comment = Comments::find($id);
         Comments::where('id', $id)->delete();
+        $thread = Threads::where('id', $comment->thread_id)->decrement('commentCount',1);
         
         return back()->withInput();    
     }

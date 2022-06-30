@@ -157,19 +157,6 @@
                 <div class="links" style="position: relative; bottom: 30px;">
                     <h1 style="color:white;">Please Login or Register to Enter the Conversation.</h1>
                 </div>
-                <div class="block">
-                    <h1 class="blockTitle">Categories</h1>
-                </div>
-                <div class="blockCategories">
-                    <h2 class="categoryName">Category name</h2>
-                    <!--Load the category threads names -->
-                    <img src="images/message.webp" height="35px" width="35px" style="position: relative; right: 439px;"><h3 class="threadName">Thread name</h3>
-                    <h2 class="threadNumber">Threads</h2>
-                    <h2 class="threadNumValue">2.2K</h2>
-                    <h2 class="postsNumber">Posts</h2>
-                    <h2 class="postsNumValue">12.3K</h2>
-                </div> 
-                
             </div>
         </div>
     </body>

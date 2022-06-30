@@ -179,8 +179,32 @@
                 <div class="links" style="position: relative; bottom: 30px;">
                     <h1 style="color:white;">Welcome {{ auth()->user()->username }}!</h1>
                 </div>
-                <div class="block">
-                    <h1 class="blockTitle">Most Recent Threads</h1>
+                <div class="block" style="display: inline-flex;">
+
+                    @if( $trend  != '0')
+                        <h1 class="blockTitle">Most Trending Threads</h1> 
+                    @elseif ($title != null)
+                        <h1 class="blockTitle">{{ $title }}</h1>
+                    @else
+                        <h1 class="blockTitle">Most Recent Threads</h1>
+                    @endif
+                    <li class="nav-item dropdown" style="text-align:right; list-style-type: none;">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre
+                        style="color: white;
+                        font-weight: bold;
+                        position: relative;
+                        font-size: 19px;
+                        left: 652px;
+                        top: -2px;">
+                            Categories
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            @foreach ($categories as $categorie)
+                            <a class="dropdown-item" href="{{ route('threads.index', ['category' => $categorie->name]) }}">{{ $categorie->name }}</a>
+                            @endforeach
+
+                        </div>
+                    </li>
                 </div>
                 @foreach ($threads as $thread)
                     <div class="blockCategories">
