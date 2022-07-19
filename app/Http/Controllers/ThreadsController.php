@@ -100,17 +100,10 @@ class ThreadsController extends Controller
             DB::table('thread_links')->insert($val);
         }
 
-        //insert the categories to another table
-        foreach (request('category') as $item){
+
             //Note for pivot tables: Make sure both names are the same as the models IE: Category & Threads == category_threads
             $thread = Threads::where('name', request('name'))->first();
-            $thread->category()->attach($item);
-            /*$val = [
-                'thread_id' => $thread->id,
-                'link' => $item,
-            ];
-            DB::table('thread_links')->insert($val);*/
-        }
+            $thread->category()->attach(request('category'));
 
         $pics = ThreadImages::where('thread_id', $thread->id)->get();
         $links = ThreadLinks::where('thread_id', $thread->id)->get();
@@ -156,10 +149,10 @@ class ThreadsController extends Controller
         ]);
         
         $thread->update($attributes);
-
-        foreach (request('category') as $item){
-            $thread->category()->syncWithoutDetaching([$item]); //Attaches only those not in the pivot table
-        }
+        
+        $thread->category()->sync(request('category'));
+        //$thread->category()->syncWithoutDetaching([request('category')]); //Attaches only those not in the pivot table
+        
         //Calls a function from another controller.
         return app('App\Http\Controllers\ThreadsController')->show($thread->name);
     }

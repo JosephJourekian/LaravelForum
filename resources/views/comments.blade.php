@@ -46,7 +46,7 @@
                                 <div class="flex">
                                     <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image" value="{{ old('image') }}" >
                                     <p style="position: absolute; left: 130px;" >Current Comment Picture</p>
-                                    <img src="{{asset('storage/'. $comment->image )}}" width="60">
+                                    <img src="{{asset('storage/'. $comment->image )}}" width="60" alt="No Image">
                                 </div>
 
                                 @error('image')
