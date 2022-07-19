@@ -184,7 +184,7 @@
                                     <img src="{{asset("storage/pics/thumbs down.png") }}" style="margin-left:10px; margin-top:-10px;" width="30" height="30">
                                 </form>
 
-                                @if ($comment->user_id == auth()->user()->id)
+                                @if ($comment->user_id == auth()->user()->id || auth()->user()->type == "admin")
                                     <div style="position: relative; left:450px; display:flex;">
                                         <form method="POST" action="{{ route('comments.delete') }}"> 
                                             @csrf

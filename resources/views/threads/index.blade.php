@@ -188,14 +188,11 @@
                     @else
                         <h1 class="blockTitle">Most Recent Threads</h1>
                     @endif
-                    <li class="nav-item dropdown" style="text-align:right; list-style-type: none;">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre
+                    <li class="nav-item dropdown" style="list-style-type: none; position:absolute; top:-1px; left:860px;">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" 
                         style="color: white;
                         font-weight: bold;
-                        position: relative;
-                        font-size: 19px;
-                        left: 652px;
-                        top: -2px;">
+                        font-size: 19px;">
                             Categories
                         </a>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -215,6 +212,9 @@
                         <h5 class="threadDate">Created on: {{ $thread->created_at->format('m/d/y') }}</h5>
                         <h2 class="threadNumber">Category</h2>
                         <h2 class="threadNumValue">{{ $thread->getCategory($thread->id) }}</h2>
+                        @if ($thread->getCategory($thread->id) == null)
+                            <h2 class="threadNumValue">N/A</h2>
+                        @endif
                         <h2 class="postsNumber">Comments</h2>
                         <h2 class="postsNumValue">{{ $thread->getCommentsCount($thread->id) }}</h2>
                     </div> 

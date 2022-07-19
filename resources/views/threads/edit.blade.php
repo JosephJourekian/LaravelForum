@@ -56,7 +56,7 @@
                             <label for="category" class="col-md-4 col-form-label text-md-end">{{ __('Category') }}</label>
 
                             <div class="col-md-6">
-                                <select name="category[]"  class="category" required multiple style="height:{{ $size*22.5 }}px;">
+                                <select name="category"  class="category" required>
                                     @foreach($category as $categorie)
                                         <option value="{{ $categorie->id }}">{{ $categorie->name }}</option>
                                     @endforeach
