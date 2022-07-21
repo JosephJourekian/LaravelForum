@@ -20,7 +20,7 @@ class ThreadsController extends Controller
         $title = null;
         $trend = '0';
         if(request('trending') == 1){//If the user clicks on trending
-            $trend = 'Most Trending Threads';
+            $trend = '1';
             return view('threads.index', [
                 'threads' => Threads::all()->sortByDesc("commentCount"),
                 'trend' => $trend,
@@ -183,5 +183,23 @@ class ThreadsController extends Controller
             'comments' => $comments
         ]);
 
+    }
+
+    public function search(){
+
+        $search = request('query');
+        $trend = 2;
+        $title = null;
+        $result = Threads::where('name', 'LIKE', "%$search%")->get(); //eloquent query to search 
+        if($result->isEmpty()){
+            $trend = 0;
+        }
+
+        return view('threads.index', [
+            'threads' => $result,
+            'trend' => $trend,
+            'title' => $title,
+            'categories' => Category::all()
+        ]);
     }
 }

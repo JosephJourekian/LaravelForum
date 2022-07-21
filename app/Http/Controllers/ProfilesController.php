@@ -7,6 +7,7 @@ use Illuminate\Validation\Rule;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Auth;
+use App\Models\Threads;
 
 class ProfilesController extends Controller
 {
@@ -35,5 +36,13 @@ class ProfilesController extends Controller
         $user->update($attributes);
         
         return redirect()->back()->with('message', 'Profile Updated!');
+    }
+
+    public function myPosts(){
+
+        $threads = Threads::where('user_id', auth()->user()->id)->get();
+        
+        return view('profiles.myPosts', ['threads' => $threads]);
+
     }
 }

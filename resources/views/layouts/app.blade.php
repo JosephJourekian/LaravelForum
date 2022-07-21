@@ -94,11 +94,11 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
-                        <a href="{{ route('threads.create') }}" class="btn" style="color: white; position: relative;">Post Thread</a>
+                        <a href="{{ route('threads.create') }}" class="btn" style="color: white; position: relative; right: 30px;">Post Thread</a>
                         <!--Search Bar -->
-                        <form action="#" class="searchBar">
+                        <form action="{{ route('threads.search') }}" class="searchBar" method="GET">
                             @csrf
-                            <input type="text" placeholder="Search" name="search" style="background-color: rgba(45,55,72); color:white; border-radius:5px; position: relative; left:30px; ">
+                            <input type="text" placeholder="Search" name="query" style="background-color: rgba(45,55,72); color:white; border-radius:5px; position: relative;">
                             <!--New thread Button -->
                             <button type="submit" style="background-color: rgba(45,55,72); border-radius:5px; height:30px; position: relative;">
                                 <i class="fa fa-search" style="color: white">
@@ -127,7 +127,7 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('profiles.edit',Auth::user()->username ) }}">Edit Profile</a>
-                                    <a class="dropdown-item" href="#">My Posts</a>
+                                    <a class="dropdown-item" href="{{ route('profiles.myPosts') }}">My Posts</a>
 
                                     @if (auth()->user()->type == 'admin')
                                         <a class="dropdown-item" href="{{ route('categories.index') }}">Add/Delete a Category</a>

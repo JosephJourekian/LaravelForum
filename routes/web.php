@@ -23,9 +23,15 @@ Route::middleware('auth')->group(function (){ //Makes sure the user is logged in
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+//Search
+Route::get('/search', [App\Http\Controllers\ThreadsController::class, 'search'])->name('threads.search');
+
+
 //Profile Editing
 Route::get('/profiles/edit/{user:username}', [App\Http\Controllers\ProfilesController::class, 'edit'])->name('profiles.edit');
 Route::patch('/profiles/update/{user:username}', 'App\Http\Controllers\ProfilesController@update')->name('profiles.update');
+Route::get('/profiles/myPosts', [App\Http\Controllers\ProfilesController::class, 'myPosts'])->name('profiles.myPosts');
+
 
 //Add/Delete a Category
 Route::get('/categories', [App\Http\Controllers\CategoriesController::class, 'index'])->name('categories.index');
