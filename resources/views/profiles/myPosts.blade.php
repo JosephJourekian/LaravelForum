@@ -180,33 +180,11 @@
                     <h1 style="color:white;">Welcome {{ auth()->user()->username }}!</h1>
                 </div>
                 <div class="block" style="display: inline-flex;">
-
-                    @if($trend  == '1')
-                        <h1 class="blockTitle">Most Trending Threads</h1> 
-                    @elseif($title != null)
-                        <h1 class="blockTitle">{{ $title }}</h1>
-                    @elseif($trend == '2')
-                        <h1 class="blockTitle">Search Results</h1>
-                    @elseif( $threads->isEmpty())
-                    <h1 class="blockTitle">No Search Results</h1>
-
+                    @if ($threads->isEmpty())
+                    <h1 class="blockTitle">No Posts Created</h1>
                     @else
-                        <h1 class="blockTitle">Most Recent Threads</h1>
+                    <h1 class="blockTitle">My Posts</h1>
                     @endif
-                    <li class="nav-item dropdown" style="list-style-type: none; position:absolute; top:-1px; left:780px;">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" 
-                        style="color: white;
-                        font-weight: bold;
-                        font-size: 19px;">
-                            Filter by Categories
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            @foreach ($categories as $categorie)
-                            <a class="dropdown-item" href="{{ route('threads.index', ['category' => $categorie->name]) }}">{{ $categorie->name }}</a>
-                            @endforeach
-
-                        </div>
-                    </li>
                 </div>
                 @foreach ($threads as $thread)
                     <div class="blockCategories">
